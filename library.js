@@ -9,6 +9,19 @@ const rowsContainer = document.querySelector('.rows');
 const tableDisplayModeBtn = document.querySelector('#table-display-mode')
 const sortBySelect = document.querySelector('#sort-by');
 const reverseOrderInput = document.querySelector('#reverse-order');
+const openModuleBtn = document.querySelector('#open-module-btn');
+const module = document.querySelector('.module');
+const closeModuleBtn = document.querySelector('#close-module-btn');
+
+openModuleBtn.onclick = () => {
+    toggleHidden(openModuleBtn);
+    toggleHidden(module);
+}
+closeModuleBtn.onclick = () => {
+    toggleHidden(openModuleBtn);
+    toggleHidden(module);
+    resetForm();
+}
 
 reverseOrderInput.onchange = () => {
     isReverseOrderOn = !isReverseOrderOn;
@@ -31,6 +44,7 @@ form.onsubmit = (e) => {
     e.preventDefault();
     createAndAddBookToLibrary(titleInput.value, authorInput.value, numberOfPagesInput.value, numberOfReadPagesInput.value);
     renderLibrary();
+    resetForm();
 }
 
 let isReverseOrderOn = false;
@@ -139,3 +153,13 @@ function sortLibrary() {
     };
 }
 
+function resetForm() {
+    authorInput.value = '';
+    titleInput.value = '';
+    numberOfPagesInput.value = '';
+    numberOfReadPagesInput.value = '';
+}
+
+function toggleHidden(element) {
+    element.classList.toggle('hidden');
+}
