@@ -7,6 +7,13 @@ const cardsContainer = document.querySelector('.cards')
 const table = document.querySelector('.table');
 const rowsContainer = document.querySelector('.rows');
 const tableDisplayModeBtn = document.querySelector('#table-display-mode')
+const sortBySelect = document.querySelector('#sort-by');
+
+sortBySelect.onchange = (e) => {
+    sortBy = e.target.value;
+    sortLibrary();
+    renderLibrary();
+}
 
 tableDisplayModeBtn.onclick = (e) => {
     isTableDisplayModeOn = !isTableDisplayModeOn;
@@ -20,6 +27,7 @@ form.onsubmit = (e) => {
     renderLibrary();
 }
 
+let sortBy = 'date';
 let isTableDisplayModeOn = false;
 let myLibrary = [];
 
@@ -28,6 +36,7 @@ function Book(title, author, numberOfPages, numberOfReadPages) {
     this.author = author;
     this.numberOfPages = numberOfPages;
     this.numberOfReadPages = numberOfReadPages;
+    this.date = new Date();
 }
 
 Book.prototype.getCardHTML = function () {
@@ -83,4 +92,35 @@ function toggleDisplay() {
     cardsContainer.classList.toggle('hidden');
 }
 
+
+
+function sortLibrary() {
+    if (sortBy === 'date') {
+        myLibrary.sort((a,b) => {
+            if (a.date > b.date) {
+                return 1
+            } else if (a.date === b.date) {
+                return 0;
+            } else {
+                return -1;
+            }
+        })
+    } else if (sortBy === 'title') {
+        myLibrary.sort((a,b) => a.title.localeCompare(b.title))
+    } else if (sortBy === 'author') {
+        myLibrary.sort((a,b) => a.author.localeCompare(b.author))
+    } else if (sortBy === 'percentage') {
+        myLibrary.sort((a,b) => {
+            let aPercentage = a.numberOfReadPages / a.numberOfPages;
+            let bPercentage = b.numberOfReadPages / a.numberOfPages;
+            if (aPercentage > bPercentage) {
+                return 1;
+            } else if (aPercentage === bPercentage) {
+                return 0;
+            } else {
+                return -1;
+            };
+        });
+    };
+}
 
