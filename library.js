@@ -8,6 +8,12 @@ const table = document.querySelector('.table');
 const rowsContainer = document.querySelector('.rows');
 const tableDisplayModeBtn = document.querySelector('#table-display-mode')
 const sortBySelect = document.querySelector('#sort-by');
+const reverseOrderInput = document.querySelector('#reverse-order');
+
+reverseOrderInput.onchange = () => {
+    isReverseOrderOn = !isReverseOrderOn;
+    renderLibrary();
+}
 
 sortBySelect.onchange = (e) => {
     sortBy = e.target.value;
@@ -27,6 +33,7 @@ form.onsubmit = (e) => {
     renderLibrary();
 }
 
+let isReverseOrderOn = false;
 let sortBy = 'date';
 let isTableDisplayModeOn = false;
 let myLibrary = [];
@@ -65,13 +72,23 @@ Book.prototype.getRowHTML = function () {
 
 function getLibraryHTML() {
     let libraryHTML = '';
-    for (let i = 0; i < myLibrary.length; i++) {
-        if (isTableDisplayModeOn) {
-            libraryHTML += myLibrary[i].getRowHTML();
-        } else {
-            libraryHTML += myLibrary[i].getCardHTML();
+    if (isReverseOrderOn) {
+        for (let i = myLibrary.length - 1; i > -1; i--) {
+            if (isTableDisplayModeOn) {
+                libraryHTML += myLibrary[i].getRowHTML();
+            } else {
+                libraryHTML += myLibrary[i].getCardHTML();
+            }
         }
-    };
+    } else {
+        for (let i = 0; i < myLibrary.length; i++) {
+            if (isTableDisplayModeOn) {
+                libraryHTML += myLibrary[i].getRowHTML();
+            } else {
+                libraryHTML += myLibrary[i].getCardHTML();
+            }
+        }
+    }
     return libraryHTML;
 }
 
@@ -91,8 +108,6 @@ function toggleDisplay() {
     table.classList.toggle('hidden');
     cardsContainer.classList.toggle('hidden');
 }
-
-
 
 function sortLibrary() {
     if (sortBy === 'date') {
