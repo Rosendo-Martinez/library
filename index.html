@@ -15,8 +15,27 @@
         <label for="number-of-read-pages">number of read pages</label><input type="number" id="number-of-read-pages" required="required">
         <button>add book</button>
     </form>
+
+    <div class="dislpay-settings">
+        <div>
+            <button id="table-display-mode">table display mode</button>
+        </div>
+    </div>
     
     <div class="cards"></div>
+    <div class="table hidden">
+        <table>
+            <tbody>
+                <tr>
+                    <th>title</th>
+                    <th>author</th>
+                    <th>number of pages</th>
+                    <th>number of read pages</th>
+                </tr>
+            </tbody>
+            <tbody class="rows"></tbody>
+        </table>
+    </div>
     <script src="./library.js"></script>
 </body>
 </html>
