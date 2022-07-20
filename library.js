@@ -78,6 +78,7 @@ Book.prototype.getCardHTML = function () {
             <p>By: ${author}<p>
             <p>Number of Pages: ${numberOfPages}<p>
             <p>Number of Read Pages: ${numberOfReadPages}<p>
+            <p>Percentage of Book Done: ${Math.round(numberOfReadPages/numberOfPages * 100)}%</p>
             <p class='increment' onclick='incrementReadPages("${title}")'>+</p>
             <p class='finish' onclick='finishReadingBook("${title}")'>finish</p>
             <p class='decrement' onclick='decrementReadPages("${title}")'>-</p>
@@ -95,6 +96,7 @@ Book.prototype.getRowHTML = function () {
             <td>${author}</td>
             <td>${numberOfPages}</td>
             <td>${numberOfReadPages}</td>
+            <td>Percentage of Book Done: ${Math.round(numberOfReadPages/numberOfPages * 100)}%</td>
             <td class='increment' onclick='incrementReadPages("${title}")'>+</td>
             <td class='finish' onclick='finishReadingBook("${title}")'>finish</td>
             <td class='decrement' onclick='decrementReadPages("${title}")'>-</td>
