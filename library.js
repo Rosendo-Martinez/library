@@ -21,6 +21,8 @@ closeModuleBtn.onclick = () => {
     toggleHidden(openModuleBtn);
     toggleHidden(module);
     resetForm();
+    isBookBeingEdited = false;
+    currentEditingBook = null;
 }
 
 reverseOrderInput.onchange = () => {
@@ -42,11 +44,19 @@ tableDisplayModeBtn.onclick = (e) => {
 
 form.onsubmit = (e) => {
     e.preventDefault();
-    createAndAddBookToLibrary(titleInput.value, authorInput.value, numberOfPagesInput.value, numberOfReadPagesInput.value);
+    if (isBookBeingEdited) {
+        updateEditingBook(titleInput.value, authorInput.value, numberOfPagesInput.value, numberOfReadPagesInput.value);
+    } else {
+        createAndAddBookToLibrary(titleInput.value, authorInput.value, numberOfPagesInput.value, numberOfReadPagesInput.value);
+    }
+    toggleHidden(openModuleBtn);
+    toggleHidden(module);
     renderLibrary();
     resetForm();
 }
 
+let currentEditingBook = null;
+let isBookBeingEdited = false;
 let isReverseOrderOn = false;
 let sortBy = 'date';
 let isTableDisplayModeOn = false;
@@ -68,6 +78,7 @@ Book.prototype.getCardHTML = function () {
             <p>By: ${author}<p>
             <p>Number of Pages: ${numberOfPages}<p>
             <p>Number of Read Pages: ${numberOfReadPages}<p>
+            <p class='edit' onclick='editBook("${title}")'>⚙</p>
         </div>
     `
 }
@@ -80,6 +91,7 @@ Book.prototype.getRowHTML = function () {
             <td>${author}</td>
             <td>${numberOfPages}</td>
             <td>${numberOfReadPages}</td>
+            <td class='edit' onclick='editBook("${title}")'>⚙</td>
         </tr>
     `
 }
@@ -162,4 +174,36 @@ function resetForm() {
 
 function toggleHidden(element) {
     element.classList.toggle('hidden');
+}
+
+function editBook(title) {
+    if (!isBookBeingEdited && module.classList.contains('hidden')) {
+        toggleHidden(module);
+    }
+    if (!openModuleBtn.classList.contains('hidden')) {
+        toggleHidden(openModuleBtn);
+    }
+    isBookBeingEdited = true;
+    currentEditingBook = getBook(title);
+    titleInput.value = currentEditingBook.title;
+    authorInput.value = currentEditingBook.author;
+    numberOfPagesInput.value = currentEditingBook.numberOfPages;
+    numberOfReadPagesInput.value = currentEditingBook.numberOfReadPages;
+}
+
+function getBook(title) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].title === title) {
+            return myLibrary[i];
+        }
+    };
+}
+
+function updateEditingBook(title, author, numberOfPages, numberOfReadPages) {
+    currentEditingBook.title = title;
+    currentEditingBook.author = author;
+    currentEditingBook.numberOfPages = numberOfPages;
+    currentEditingBook.numberOfReadPages = numberOfReadPages;
+    isBookBeingEdited = false;
+    currentEditingBook = null;
 }
