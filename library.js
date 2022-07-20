@@ -13,6 +13,34 @@ const openModuleBtn = document.querySelector('#open-module-btn');
 const module = document.querySelector('.module');
 const closeModuleBtn = document.querySelector('#close-module-btn');
 
+titleInput.onchange = () => {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].title === titleInput.value) {
+            titleInput.setCustomValidity("Book with this title already exists");
+            return;
+        }
+    }
+    titleInput.setCustomValidity("");
+}
+
+numberOfReadPagesInput.onchange = () => {
+    if ((parseInt(numberOfReadPagesInput.value ) > parseInt(numberOfPagesInput.value))) {
+        numberOfReadPagesInput.setCustomValidity("Number of read pages must be less than number of pages");
+    } else {
+        numberOfReadPagesInput.setCustomValidity("");
+        numberOfPagesInput.setCustomValidity("");
+    }
+}
+
+numberOfPagesInput.onchange = () => {
+    if ((parseInt(numberOfReadPagesInput.value ) > parseInt(numberOfPagesInput.value))) {
+        numberOfPagesInput.setCustomValidity("Number of pages must be greater than number of read pages");
+    } else {
+        numberOfReadPagesInput.setCustomValidity("");
+        numberOfPagesInput.setCustomValidity("");
+    }
+}
+
 openModuleBtn.onclick = () => {
     toggleHidden(openModuleBtn);
     toggleHidden(module);
