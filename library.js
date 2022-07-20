@@ -82,6 +82,7 @@ Book.prototype.getCardHTML = function () {
             <p class='finish' onclick='finishReadingBook("${title}")'>finish</p>
             <p class='decrement' onclick='decrementReadPages("${title}")'>-</p>
             <p class='edit' onclick='editBook("${title}")'>⚙</p>
+            <p class='delete' onclick='deleteBook("${title}")'>x</p>
         </div>
     `
 }
@@ -98,6 +99,7 @@ Book.prototype.getRowHTML = function () {
             <td class='finish' onclick='finishReadingBook("${title}")'>finish</td>
             <td class='decrement' onclick='decrementReadPages("${title}")'>-</td>
             <td class='edit' onclick='editBook("${title}")'>⚙</td>
+            <td class='delete' onclick='deleteBook("${title}")'>x</td>
         </tr>
     `
 }
@@ -235,5 +237,15 @@ function finishReadingBook(title) {
     if (book.numberOfPages !== book.numberOfReadPages) {
         book.numberOfReadPages = book.numberOfPages;
         renderLibrary();
+    }
+}
+
+function deleteBook(title) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].title === title) {
+            myLibrary.splice(i, 1);
+            renderLibrary();
+            return;
+        }
     }
 }
