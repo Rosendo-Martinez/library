@@ -163,15 +163,9 @@ function sortLibrary() {
         myLibrary.sort((a,b) => a.author.localeCompare(b.author))
     } else if (sortBy === 'percentage') {
         myLibrary.sort((a,b) => {
-            let aPercentage = a.numberOfReadPages / a.numberOfPages;
-            let bPercentage = b.numberOfReadPages / a.numberOfPages;
-            if (aPercentage > bPercentage) {
-                return 1;
-            } else if (aPercentage === bPercentage) {
-                return 0;
-            } else {
-                return -1;
-            };
+            let aPercentage = Math.floor(a.numberOfReadPages / a.numberOfPages * 100);
+            let bPercentage = Math.floor(b.numberOfReadPages / b.numberOfPages * 100);
+            return aPercentage - bPercentage;
         });
     };
 }
@@ -223,6 +217,9 @@ function incrementReadPages(title) {
     let book = getBook(title) 
     if (book.numberOfPages > book.numberOfReadPages) {
         book.numberOfReadPages++;
+        if (sortBy === 'percentage') {
+            sortLibrary();
+        }
         renderLibrary();
     }
 }
@@ -231,6 +228,9 @@ function decrementReadPages(title) {
     let book = getBook(title) 
     if (book.numberOfReadPages > 0) {
         book.numberOfReadPages--;
+        if (sortBy === 'percentage') {
+            sortLibrary();
+        }
         renderLibrary();
     }
 }
@@ -239,6 +239,9 @@ function finishReadingBook(title) {
     let book = getBook(title) 
     if (book.numberOfPages !== book.numberOfReadPages) {
         book.numberOfReadPages = book.numberOfPages;
+        if (sortBy === 'percentage') {
+            sortLibrary();
+        }
         renderLibrary();
     }
 }
