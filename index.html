@@ -44,15 +44,40 @@
     <div class="cards"></div>
     <div class="table hidden">
         <table>
-            <tbody>
-                <tr>
-                    <th>title</th>
-                    <th>author</th>
-                    <th>number of pages</th>
-                    <th>number of read pages</th>
-                </tr>
-            </tbody>
-            <tbody class="rows"></tbody>
+            <tr>
+                <table id="book-table">
+                    <tbody>
+                        <tr>
+                            <th>title</th>
+                            <th>author</th>
+                            <th>number of pages</th>
+                            <th>number of read pages</th>
+                        </tr>
+                    </tbody>
+                    <tbody class="rows"></tbody>
+                </table>
+            </tr>
+            <tr>
+                <table id="book-summary-table">
+                    <tr><th>summary</th></tr>
+                    <tr>
+                        <td>number of books</td>
+                        <td id="number-of-books-td"></td>
+                        <td>number of authors</td>
+                        <td id="number-of-book-authors-td"></td>
+                        <td>total pages</td>
+                        <td id="total-pages-td"></td>
+                    </tr>
+                    <tr>
+                        <td>total read pages</td>
+                        <td id="total-read-pages-td"></td>
+                        <td>books read</td>
+                        <td id="books-read-td"></td>
+                        <td>books not done</td>
+                        <td id="books-note-done-td"></td>
+                    </tr>
+                </table>
+            </tr>
         </table>
     </div>
     <script src="./library.js"></script>

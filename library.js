@@ -133,6 +133,7 @@ function createAndAddBookToLibrary(title, author, numberOfPages, numberOfReadPag
 function renderLibrary() {
     if (isTableDisplayModeOn) {
         rowsContainer.innerHTML = getLibraryHTML();
+        renderTableSummary();
     } else {
         cardsContainer.innerHTML = getLibraryHTML();
     }
@@ -248,4 +249,67 @@ function deleteBook(title) {
             return;
         }
     }
+}
+
+function renderTableSummary() {
+    const numberOfBooksTd = document.querySelector('#number-of-books-td');
+    const numberOfBookAuthorsTd = document.querySelector('#number-of-book-authors-td');
+    const totalReadPagesTd = document.querySelector('#total-read-pages-td');
+    const booksReadTd = document.querySelector('#books-read-td');
+    const totalPagesTd = document.querySelector('#total-pages-td');
+    const booksNoteDoneTd = document.querySelector('#books-note-done-td');
+    numberOfBooksTd.textContent = getNumberOfBooks();
+    numberOfBookAuthorsTd.textContent = getNumberOfUniqueBookAuthors();
+    totalReadPagesTd.textContent = getTotalNumberOfReadPages();
+    booksReadTd.textContent = getTotalNumberOfBooksRead();
+    totalPagesTd.textContent = getTotalNumberOfPages();
+    booksNoteDoneTd.textContent = getBooksNotDone();
+}
+
+function getNumberOfBooks() {
+    return myLibrary.length;
+}
+
+function getNumberOfUniqueBookAuthors() {
+    const authors = []
+    for (let i = 0; i < myLibrary.length; i++) {
+        authors.push(myLibrary[i].author);
+    };
+    return new Set(authors).size;
+}
+
+function getTotalNumberOfPages() {
+    let totalNumberOfPages = 0;
+    for (let i = 0; i < myLibrary.length; i++) {
+        totalNumberOfPages += myLibrary[i].numberOfPages;
+    }
+    return totalNumberOfPages;
+}
+
+function getTotalNumberOfReadPages() {
+    let totalNumberOfReadPages = 0;
+    for (let i = 0; i < myLibrary.length; i++) {
+        totalNumberOfReadPages += myLibrary[i].numberOfReadPages;
+    }
+    return totalNumberOfReadPages;
+}
+
+function getTotalNumberOfBooksRead() {
+    let booksRead = 0;
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].numberOfPages === myLibrary[i].numberOfReadPages) {
+            booksRead++;
+        }
+    }
+    return booksRead;
+}
+
+function getBooksNotDone() {
+    let booksNotDone = 0;
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].numberOfPages !== myLibrary[i].numberOfReadPages) {
+            booksNotDone++;
+        }
+    }
+    return booksNotDone;
 }
