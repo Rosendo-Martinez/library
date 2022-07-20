@@ -78,6 +78,9 @@ Book.prototype.getCardHTML = function () {
             <p>By: ${author}<p>
             <p>Number of Pages: ${numberOfPages}<p>
             <p>Number of Read Pages: ${numberOfReadPages}<p>
+            <p class='increment' onclick='incrementReadPages("${title}")'>+</p>
+            <p class='finish' onclick='finishReadingBook("${title}")'>finish</p>
+            <p class='decrement' onclick='decrementReadPages("${title}")'>-</p>
             <p class='edit' onclick='editBook("${title}")'>⚙</p>
         </div>
     `
@@ -91,6 +94,9 @@ Book.prototype.getRowHTML = function () {
             <td>${author}</td>
             <td>${numberOfPages}</td>
             <td>${numberOfReadPages}</td>
+            <td class='increment' onclick='incrementReadPages("${title}")'>+</td>
+            <td class='finish' onclick='finishReadingBook("${title}")'>finish</td>
+            <td class='decrement' onclick='decrementReadPages("${title}")'>-</td>
             <td class='edit' onclick='editBook("${title}")'>⚙</td>
         </tr>
     `
@@ -206,4 +212,28 @@ function updateEditingBook(title, author, numberOfPages, numberOfReadPages) {
     currentEditingBook.numberOfReadPages = numberOfReadPages;
     isBookBeingEdited = false;
     currentEditingBook = null;
+}
+
+function incrementReadPages(title) {
+    let book = getBook(title) 
+    if (book.numberOfPages > book.numberOfReadPages) {
+        book.numberOfReadPages++;
+        renderLibrary();
+    }
+}
+
+function decrementReadPages(title) {
+    let book = getBook(title) 
+    if (book.numberOfReadPages > 0) {
+        book.numberOfReadPages--;
+        renderLibrary();
+    }
+}
+
+function finishReadingBook(title) {
+    let book = getBook(title) 
+    if (book.numberOfPages !== book.numberOfReadPages) {
+        book.numberOfReadPages = book.numberOfPages;
+        renderLibrary();
+    }
 }
