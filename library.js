@@ -388,3 +388,11 @@ function getBooksNotDone() {
     }
     return booksNotDone;
 }
+
+// Preloaded Examples
+createAndAddBookToLibrary('Game of Thrones', "George R. R. Martin", 1088, 1088);
+createAndAddBookToLibrary('A Clash of Kings', "George R. R. Martin", 2087, 562);
+createAndAddBookToLibrary('The Hobbit', "J. R. R. Tolkien", 306, 27);
+createAndAddBookToLibrary('The Gulag Archipelago', 'Aleksandr Solzhenitsyn', 672, 0);
+createAndAddBookToLibrary("Harry Potter and the Sorcerer's Stone", 'J.K. Rowling', 320, 0);
+renderLibrary();
