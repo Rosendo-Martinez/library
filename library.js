@@ -68,6 +68,11 @@ tableDisplayModeBtn.onclick = (e) => {
     isTableDisplayModeOn = !isTableDisplayModeOn;
     toggleDisplay();
     renderLibrary();
+    if (isTableDisplayModeOn) {
+        tableDisplayModeBtn.textContent = 'Card Display'
+    } else {
+        tableDisplayModeBtn.textContent = 'Table Display'
+    }
 }
 
 form.onsubmit = (e) => {
@@ -102,16 +107,42 @@ Book.prototype.getCardHTML = function () {
     const {title, author, numberOfPages, numberOfReadPages} = this;
     return `
         <div class='card'> 
-            <p>${title}<p>
-            <p>By: ${author}<p>
-            <p>Number of Pages: ${numberOfPages}<p>
-            <p>Number of Read Pages: ${numberOfReadPages}<p>
-            <p>Percentage of Book Done: ${Math.floor(numberOfReadPages/numberOfPages * 100)}%</p>
-            <p class='increment' onclick='incrementReadPages("${title}")'>+</p>
-            <p class='finish' onclick='finishReadingBook("${title}")'>finish</p>
-            <p class='decrement' onclick='decrementReadPages("${title}")'>-</p>
-            <p class='edit' onclick='editBook("${title}")'>⚙</p>
-            <p class='delete' onclick='deleteBook("${title}")'>x</p>
+            <div class='card-top'>
+                <p class='edit' onclick='editBook("${title}")'>
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+                </p>
+                <p class='delete' onclick='deleteBook("${title}")'>
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </p>
+            </div>
+            <div>
+                <p class='title'>${title}<p>
+                <p class='author'>By: ${author}<p>
+                <p class='number-of-pages'>Number of Pages: ${numberOfPages}<p>
+                <p class='number-of-read-pages'>Number of Read Pages: ${numberOfReadPages}<p>
+                <p class='percentage'>Percentage of Book Done: ${Math.floor(numberOfReadPages/numberOfPages * 100)}%</p>
+            </div>
+            <div class='card-bottom'>
+                <p class='increment' onclick='incrementReadPages("${title}")'>
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                </p>
+                <p class='finish' onclick='finishReadingBook("${title}")'>
+                    <span class="material-symbols-outlined">
+                        done
+                    </span>
+                </p>
+                <p class='decrement' onclick='decrementReadPages("${title}")'>
+                    <span class="material-symbols-outlined">
+                        remove
+                    </span>
+                </p>
+            </div>
         </div>
     `
 }
@@ -120,16 +151,27 @@ Book.prototype.getRowHTML = function () {
     const {title, author, numberOfPages, numberOfReadPages} = this;
     return `
         <tr>
+
             <td>${title}</td>
             <td>${author}</td>
             <td>${numberOfPages}</td>
             <td>${numberOfReadPages}</td>
-            <td>Percentage of Book Done: ${Math.floor(numberOfReadPages/numberOfPages * 100)}%</td>
-            <td class='increment' onclick='incrementReadPages("${title}")'>+</td>
-            <td class='finish' onclick='finishReadingBook("${title}")'>finish</td>
-            <td class='decrement' onclick='decrementReadPages("${title}")'>-</td>
-            <td class='edit' onclick='editBook("${title}")'>⚙</td>
-            <td class='delete' onclick='deleteBook("${title}")'>x</td>
+            <td>${Math.floor(numberOfReadPages/numberOfPages * 100)}%</td>
+            <td class='increment' onclick='incrementReadPages("${title}")'>
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+            </td>
+            <td class='finish' onclick='finishReadingBook("${title}")'>
+                <span class="material-symbols-outlined">
+                    done
+                </span>
+            </td>
+            <td class='decrement' onclick='decrementReadPages("${title}")'>
+                <span class="material-symbols-outlined">
+                    remove
+                </span>
+            </td>
         </tr>
     `
 }
