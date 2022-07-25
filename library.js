@@ -95,85 +95,87 @@ let sortBy = 'date';
 let isTableDisplayModeOn = false;
 let myLibrary = [];
 
-function Book(title, author, numberOfPages, numberOfReadPages) {
-    this.title = title;
-    this.author = author;
-    this.numberOfPages = numberOfPages;
-    this.numberOfReadPages = numberOfReadPages;
-    this.date = new Date();
-}
-
-Book.prototype.getCardHTML = function () {
-    const {title, author, numberOfPages, numberOfReadPages} = this;
-    return `
-        <div class='card'> 
-            <div class='card-top'>
-                <p class='edit' onclick='editBook("${title}")'>
-                    <span class="material-symbols-outlined">
-                        settings
-                    </span>
-                </p>
-                <p class='delete' onclick='deleteBook("${title}")'>
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
-                </p>
-            </div>
-            <div>
-                <p class='title'>${title}<p>
-                <p class='author'>By: ${author}<p>
-                <p class='number-of-pages'>Number of Pages: ${numberOfPages}<p>
-                <p class='number-of-read-pages'>Number of Read Pages: ${numberOfReadPages}<p>
-                <p class='percentage'>Percentage of Book Done: ${Math.floor(numberOfReadPages/numberOfPages * 100)}%</p>
-            </div>
-            <div class='card-bottom'>
-                <p class='increment' onclick='incrementReadPages("${title}")'>
+class Book {
+    constructor(title, author, numberOfPages, numberOfReadPages) {
+        this.title = title;
+        this.author = author;
+        this.numberOfPages = numberOfPages;
+        this.numberOfReadPages = numberOfReadPages;
+        this.date = new Date();
+    }
+    
+    getCardHTML() {
+       const {title, author, numberOfPages, numberOfReadPages} = this;
+       return `
+           <div class='card'> 
+               <div class='card-top'>
+                   <p class='edit' onclick='editBook("${title}")'>
+                       <span class="material-symbols-outlined">
+                           settings
+                       </span>
+                   </p>
+                   <p class='delete' onclick='deleteBook("${title}")'>
+                       <span class="material-symbols-outlined">
+                           close
+                       </span>
+                   </p>
+               </div>
+               <div>
+                   <p class='title'>${title}<p>
+                   <p class='author'>By: ${author}<p>
+                   <p class='number-of-pages'>Number of Pages: ${numberOfPages}<p>
+                   <p class='number-of-read-pages'>Number of Read Pages: ${numberOfReadPages}<p>
+                   <p class='percentage'>Percentage of Book Done: ${Math.floor(numberOfReadPages/numberOfPages * 100)}%</p>
+               </div>
+               <div class='card-bottom'>
+                   <p class='increment' onclick='incrementReadPages("${title}")'>
+                       <span class="material-symbols-outlined">
+                           add
+                       </span>
+                   </p>
+                   <p class='finish' onclick='finishReadingBook("${title}")'>
+                       <span class="material-symbols-outlined">
+                           done
+                       </span>
+                   </p>
+                   <p class='decrement' onclick='decrementReadPages("${title}")'>
+                       <span class="material-symbols-outlined">
+                           remove
+                       </span>
+                   </p>
+               </div>
+           </div>
+       `
+    }
+    
+    getRowHTML() {
+        const {title, author, numberOfPages, numberOfReadPages} = this;
+        return `
+            <tr>
+    
+                <td>${title}</td>
+                <td>${author}</td>
+                <td>${numberOfPages}</td>
+                <td>${numberOfReadPages}</td>
+                <td>${Math.floor(numberOfReadPages/numberOfPages * 100)}%</td>
+                <td class='increment' onclick='incrementReadPages("${title}")'>
                     <span class="material-symbols-outlined">
                         add
                     </span>
-                </p>
-                <p class='finish' onclick='finishReadingBook("${title}")'>
+                </td>
+                <td class='finish' onclick='finishReadingBook("${title}")'>
                     <span class="material-symbols-outlined">
                         done
                     </span>
-                </p>
-                <p class='decrement' onclick='decrementReadPages("${title}")'>
+                </td>
+                <td class='decrement' onclick='decrementReadPages("${title}")'>
                     <span class="material-symbols-outlined">
                         remove
                     </span>
-                </p>
-            </div>
-        </div>
-    `
-}
-
-Book.prototype.getRowHTML = function () {
-    const {title, author, numberOfPages, numberOfReadPages} = this;
-    return `
-        <tr>
-
-            <td>${title}</td>
-            <td>${author}</td>
-            <td>${numberOfPages}</td>
-            <td>${numberOfReadPages}</td>
-            <td>${Math.floor(numberOfReadPages/numberOfPages * 100)}%</td>
-            <td class='increment' onclick='incrementReadPages("${title}")'>
-                <span class="material-symbols-outlined">
-                    add
-                </span>
-            </td>
-            <td class='finish' onclick='finishReadingBook("${title}")'>
-                <span class="material-symbols-outlined">
-                    done
-                </span>
-            </td>
-            <td class='decrement' onclick='decrementReadPages("${title}")'>
-                <span class="material-symbols-outlined">
-                    remove
-                </span>
-            </td>
-        </tr>
-    `
+                </td>
+            </tr>
+        `
+    }
 }
 
 function getLibraryHTML() {
